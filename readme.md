@@ -86,13 +86,6 @@ Oluşturulan tablo adı:
 - `psycopg2-binary`
 - `dotenv`
 
-## Notlar
-
-- API anahtarı şu anda kod içinde sabit tanımlı. Daha güvenli kullanım için ortam değişkenine taşınması önerilir.
-- `data_procces.py` dosya adında yazım farkı var; istenirse daha sonra daha anlaşılır bir isimle düzenlenebilir.
-- Redis kuyruğunda veri yoksa işlem `Redis'de veri yok.` mesajı verir.
-- `beykoz_hava_durumu` tablosu yoksa önce veritabanında oluşturulmalıdır.
-
 ## Beklenen Sonuç
 
 Pipeline başarıyla çalıştığında:

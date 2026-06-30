@@ -36,7 +36,7 @@ services:
   data_procces:
     build: .
     container_name: Data_Proccessor
-    command: python data_procces.py
+    command: python data_proccessor.py
     volumes:
       - .:/app
     depends_on:
