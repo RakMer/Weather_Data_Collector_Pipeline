@@ -1,0 +1,48 @@
+services:
+  queue:
+    image: redis:alpine
+    container_name: dataStorage
+    healthcheck:
+      test: ["CMD", "redis-cli","ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  database:
+    image: postgres:15-alpine
+    container_name: database
+    ports:
+      - 5432:5432
+    environment:
+      - POSTGRES_DB=deneme
+      - POSTGRES_USER=mert
+      - POSTGRES_PASSWORD=scretpassword
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mert -d deneme"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      
+
+  weather_collector:
+    build: .
+    container_name: Weather_Collector
+    volumes:
+      - .:/app
+    depends_on:
+      queue:
+        condition: service_healthy
+
+  data_procces:
+    build: .
+    container_name: Data_Proccessor
+    command: python data_procces.py
+    volumes:
+      - .:/app
+    depends_on:
+      queue:
+        condition: service_healthy
+      database:
+        condition: service_healthy
+      weather_collector:
+        condition: service_completed_successfully
