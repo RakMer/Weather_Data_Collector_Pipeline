@@ -14,9 +14,9 @@ services:
     ports:
       - 5432:5432
     environment:
-      - POSTGRES_DB=deneme
-      - POSTGRES_USER=mert
-      - POSTGRES_PASSWORD=scretpassword
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U mert -d deneme"]
       interval: 5s

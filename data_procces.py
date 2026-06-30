@@ -1,6 +1,8 @@
 import pandas as pd
 import redis
 import json
+import os
+from dotenv import load_dotenv
 from sqlalchemy import create_engine
 
 #docker exec -it dataStorage redis-cli   LLEN weather_queue
@@ -31,9 +33,21 @@ if veri_paketi:
     print("🚀 --- PANDAS MOTORUNDAN ÇIKAN TERTEMİZ TABLO ---")
     print(df_temiz.head(5))  # İlk 5 satırı yazdıralım
 
-    engine = create_engine(('postgresql://mert:scretpassword@database:5432/deneme'))
+    load_dotenv()
 
-    df_temiz.to_sql('beykoz_hava_durumu', engine, if_exists='append', index=False)
+    engine=os.getenv("ENGINE")
+
+    try:
+        print("Veriler veritabanına kaydediliyor!")
+        engine = create_engine((engine))
+
+        df_temiz.to_sql('beykoz_hava_durumu', engine, if_exists='append', index=False)
+        print("Veriler veritabanına başarıyla kaydedildi!")
+
+
+    except:
+        print("Hata var!")
+
 
 
 else:

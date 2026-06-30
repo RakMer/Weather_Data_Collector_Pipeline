@@ -1,10 +1,15 @@
 import http.client
 import redis
+import os
+from dotenv import load_dotenv
 
 conn = http.client.HTTPSConnection("open-weather13.p.rapidapi.com")
 
+load_dotenv()
+api_key = os.getenv("x-rapidapi-key")
+
 headers = {
-    'x-rapidapi-key': "c8c55cc0bbmsh6f146e4d5044239p12f0a5jsn15b5c56f8ccc",
+    'x-rapidapi-key': f"{api_key}",
     'x-rapidapi-host': "open-weather13.p.rapidapi.com",
     'Content-Type': "application/json"
 }
